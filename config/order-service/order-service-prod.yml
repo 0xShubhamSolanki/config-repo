@@ -1,0 +1,37 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: jdbc:mysql://prod-db-cluster:3306/order_prod
+    username: prod_user
+    password: prod_secret_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
+logging:
+  level:
+    root: ERROR
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
