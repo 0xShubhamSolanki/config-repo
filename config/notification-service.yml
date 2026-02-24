@@ -15,9 +15,16 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       
       properties:
-        spring.json.trusted.packages: "com.kodewala.notification_service.dto"
+        spring.json.trusted.packages: com.kodewala.notification_service.dto
         spring.json.value.default.type: com.kodewala.notification_service.dto.OrderEvent
         spring.json.use.type.headers: false
+
+      # Optional but recommended
+      enable-auto-commit: false
+
+  jackson:
+    serialization:
+      indent-output: true
 
 eureka:
   client:
