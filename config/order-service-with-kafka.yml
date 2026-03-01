@@ -19,15 +19,6 @@ spring:
       hibernate:
         format_sql: true
 
-  management:
-  tracing:
-    sampling:
-      probability: 1.0
-
-  zipkin:
-    tracing:
-      endpoint: http://localhost:9411/api/v2/spans      
-
   kafka:
     bootstrap-servers: localhost:9092
 
@@ -41,6 +32,9 @@ spring:
     serialization:
       indent-output: true
 
+# ==============================
+# EUREKA CONFIG
+# ==============================
 eureka:
   client:
     service-url:
@@ -48,12 +42,26 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 
+# ==============================
+# ACTUATOR + ZIPKIN TRACING
+# ==============================
 management:
   endpoints:
     web:
       exposure:
         include: "*"
 
+  tracing:
+    sampling:
+      probability: 1.0   # 100% requests traced (dev ke liye)
+
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+# ==============================
+# CUSTOM APP CONFIG
+# ==============================
 app:
   kafka:
     topic: order-topic
