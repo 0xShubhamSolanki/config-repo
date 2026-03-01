@@ -13,19 +13,21 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      
+
       properties:
         spring.json.trusted.packages: "*"
         spring.json.value.default.type: com.kodewala.notification_service.dto.OrderEvent
         spring.json.use.type.headers: false
 
-      # Optional but recommended
       enable-auto-commit: false
 
   jackson:
     serialization:
       indent-output: true
 
+# ==============================
+# EUREKA CONFIG
+# ==============================
 eureka:
   client:
     service-url:
@@ -33,12 +35,26 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 
+# ==============================
+# ACTUATOR + ZIPKIN TRACING
+# ==============================
 management:
   endpoints:
     web:
       exposure:
         include: "*"
 
+  tracing:
+    sampling:
+      probability: 1.0   # dev environment me 100% tracing
+
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+# ==============================
+# CUSTOM APP CONFIG
+# ==============================
 app:
   kafka:
     topic: order-topic
