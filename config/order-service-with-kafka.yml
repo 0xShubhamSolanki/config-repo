@@ -22,7 +22,6 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
-
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -46,7 +45,7 @@ eureka:
     fetch-registry: true
 
 # ==============================
-# ACTUATOR + ZIPKIN TRACING
+# ACTUATOR + ZIPKIN + TRACING
 # ==============================
 management:
   endpoints:
@@ -55,8 +54,13 @@ management:
         include: "*"
 
   tracing:
+    enabled: true
     sampling:
-      probability: 1.0
+      probability: 1.0   # dev ke liye 100%
+
+  observation:
+    kafka:
+      enabled: true      # 🔥 IMPORTANT for Kafka tracing
 
   zipkin:
     tracing:
@@ -67,7 +71,7 @@ management:
 # ==============================
 logging:
   pattern:
-    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 
 # ==============================
 # CUSTOM APP CONFIG
