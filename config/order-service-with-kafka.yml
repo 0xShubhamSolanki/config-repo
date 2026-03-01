@@ -15,6 +15,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
@@ -36,6 +37,8 @@ spring:
 # EUREKA CONFIG
 # ==============================
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
@@ -53,11 +56,18 @@ management:
 
   tracing:
     sampling:
-      probability: 1.0   # 100% requests traced (dev ke liye)
+      probability: 1.0
 
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
+
+# ==============================
+# LOGGING (TraceId visible 🔥)
+# ==============================
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
 
 # ==============================
 # CUSTOM APP CONFIG
